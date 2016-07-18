@@ -4,11 +4,18 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
+
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class loginForm {
 
@@ -65,20 +72,41 @@ public class loginForm {
 		lblPassword.setBounds(93, 45, 67, 14);
 		frame.getContentPane().add(lblPassword);
 		
+		final JLabel error = new JLabel("Error : Invalid user name or password");
+		error.setVisible(false);
+		error.setForeground(Color.RED);
+		error.setBounds(93, 73, 232, 14);
+		frame.getContentPane().add(error);
+		
 		JButton btnLogIn = new JButton("Log In");
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				String userName = textField.getText();
-				char[] password = passwordField.getPassword();
-				System.out.println("userName is = "+ userName);
-				System.out.println("password is = "+ password.toString());
-				frame.dispose();
+				String password = new String(passwordField.getPassword());
+				
+				Connection conn = null;
 				try {
-					registrationForm windowReg = new registrationForm();
-					windowReg.frame.setVisible(true);
+					conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/patientReg", "root", "");
+					String query = "SELECT * FROM USER WHERE userName='"+userName+"' and password='"+password+"'";
+					Statement stat = (Statement) conn.createStatement();
+					ResultSet result = stat.executeQuery(query);
+					if(result.first()){
+						//while(result.next()){
+							frame.dispose();
+							try {
+								registrationForm windowReg = new registrationForm();
+								windowReg.frame.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						//}	
+					}else{
+						error.setVisible(true);
+					}
 				} catch (Exception e) {
-					e.printStackTrace();
-				}
+					// TODO: handle exception
+					System.out.println(e);
+				}				
 			}
 		});
 		btnLogIn.setBounds(150, 103, 89, 23);
