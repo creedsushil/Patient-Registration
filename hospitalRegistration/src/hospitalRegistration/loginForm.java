@@ -19,7 +19,7 @@ import java.awt.Color;
 
 public class loginForm {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField textField;
 	private JPasswordField passwordField;
 
@@ -37,7 +37,7 @@ public class loginForm {
 				}
 			}
 		});
-	}
+		}
 
 	/**
 	 * Create the application.
@@ -101,11 +101,14 @@ public class loginForm {
 							}
 						//}	
 					}else{
+						error.setText("Error : Invalid user name or password");
 						error.setVisible(true);
 					}
 				} catch (Exception e) {
 					// TODO: handle exception
-					System.out.println(e);
+					//System.out.println(e);
+					error.setText("Please Check Server");
+					error.setVisible(true);
 				}				
 			}
 		});
