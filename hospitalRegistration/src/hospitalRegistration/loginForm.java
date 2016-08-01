@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
@@ -83,12 +84,10 @@ public class loginForm {
 			public void actionPerformed(ActionEvent event) {
 				String userName = textField.getText();
 				String password = new String(passwordField.getPassword());
-				
-				Connection conn = null;
-				try {
-					conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/patientReg", "root", "");
+				Connection dbCon = new databaseConnection().getConnection();
+				try {					
 					String query = "SELECT * FROM USER WHERE userName='"+userName+"' and password='"+password+"'";
-					Statement stat = (Statement) conn.createStatement();
+					Statement stat = (Statement) dbCon.createStatement();
 					ResultSet result = stat.executeQuery(query);
 					if(result.first()){
 						//while(result.next()){
@@ -104,12 +103,19 @@ public class loginForm {
 						error.setText("Error : Invalid user name or password");
 						error.setVisible(true);
 					}
+					
 				} catch (Exception e) {
 					// TODO: handle exception
 					//System.out.println(e);
 					error.setText("Please Check Server");
 					error.setVisible(true);
-				}				
+				}
+				try {
+					dbCon.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		btnLogIn.setBounds(150, 103, 89, 23);

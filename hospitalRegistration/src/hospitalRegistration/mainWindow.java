@@ -1,26 +1,20 @@
 package hospitalRegistration;
 
-import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.Frame;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.text.JTextComponent;
+import java.awt.GridLayout;
+import javax.swing.JToolBar;
+import java.awt.BorderLayout;
+import java.awt.Color;
 
-import com.mysql.fabric.xmlrpc.base.Array;
-import com.mysql.jdbc.Statement;
-
-import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-//import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,14 +22,20 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
-import java.awt.Panel;
-import java.awt.TextField;
-import java.awt.Color;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 
-public class registrationForm {
+import java.awt.List;
+import java.awt.ScrollPane;
 
-	public JFrame frame;
+import javax.swing.JTable;
+
+public class mainWindow {
+
+	private JFrame frame;
 	private JTextField fName;
 	private JTextField lName;
 	private JTextField date;
@@ -45,6 +45,9 @@ public class registrationForm {
 	private JTextField guardian;
 	private JTextField age;
 	private JTextField emeContact;
+	private JTable table;
+	private JTextField searchField;
+	private JTextField search;
 
 	/**
 	 * Launch the application.
@@ -53,7 +56,7 @@ public class registrationForm {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					registrationForm window = new registrationForm();
+					mainWindow window = new mainWindow();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,49 +67,57 @@ public class registrationForm {
 
 	/**
 	 * Create the application.
+	 * 
+	 * @throws SQLException
 	 */
-	public registrationForm() {
+	public mainWindow() throws SQLException {
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * 
+	 * @throws SQLException
 	 */
-
-	private void initialize() {
+	private void initialize() throws SQLException {
 		frame = new JFrame();
-		frame.getContentPane().setForeground(Color.BLACK);
-		frame.setBounds(100, 100, 585, 378);
-		frame.setUndecorated(true);
+		frame.setBounds(100, 100, 713, 424);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		frame.setTitle("Registration Form");
+		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+
+		JToolBar toolBar = new JToolBar();
+		frame.getContentPane().add(toolBar, BorderLayout.NORTH);
+
+		final JInternalFrame internalFrame = new JInternalFrame("Register");
+		frame.getContentPane().add(internalFrame, BorderLayout.CENTER);
+		internalFrame.getContentPane().setLayout(null);
+		internalFrame.setTitle("Registration Form");
 		JLabel lblName = new JLabel("First Name  :");
 		lblName.setBounds(10, 50, 89, 14);
-		frame.getContentPane().add(lblName);
+		internalFrame.getContentPane().add(lblName);
 
 		fName = new JTextField();
 		fName.setBounds(126, 42, 107, 20);
-		frame.getContentPane().add(fName);
+		internalFrame.getContentPane().add(fName);
 		fName.setColumns(10);
 
 		JLabel lblLastname = new JLabel("Last Name :");
 		lblLastname.setBounds(243, 50, 74, 14);
-		frame.getContentPane().add(lblLastname);
+		internalFrame.getContentPane().add(lblLastname);
 
 		lName = new JTextField();
 		lName.setBounds(346, 44, 126, 20);
-		frame.getContentPane().add(lName);
+		internalFrame.getContentPane().add(lName);
 		lName.setColumns(10);
 
 		JLabel lblDate = new JLabel("Date :");
 		lblDate.setBounds(10, 14, 46, 14);
-		frame.getContentPane().add(lblDate);
+		internalFrame.getContentPane().add(lblDate);
 
 		date = new JTextField();
 		date.setEditable(false);
 		date.setBounds(76, 11, 107, 20);
-		frame.getContentPane().add(date);
+		internalFrame.getContentPane().add(date);
 		date.setColumns(10);
 		date.setFocusable(false);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -115,74 +126,74 @@ public class registrationForm {
 		JComboBox gender = new JComboBox();
 		gender.setModel(new DefaultComboBoxModel(new String[] { "Male", "Female", "Others" }));
 		gender.setBounds(126, 73, 107, 20);
-		frame.getContentPane().add(gender);
+		internalFrame.getContentPane().add(gender);
 
 		JLabel lblGender = new JLabel("Gender        :");
 		lblGender.setBounds(10, 81, 68, 14);
-		frame.getContentPane().add(lblGender);
+		internalFrame.getContentPane().add(lblGender);
 
 		JLabel lblAddress = new JLabel("Address     :");
 		lblAddress.setBounds(243, 76, 75, 14);
-		frame.getContentPane().add(lblAddress);
+		internalFrame.getContentPane().add(lblAddress);
 
 		address = new JTextField();
 		address.setBounds(346, 75, 126, 20);
-		frame.getContentPane().add(address);
+		internalFrame.getContentPane().add(address);
 		address.setColumns(10);
 
 		JLabel lblContactNo = new JLabel("Contact No. :");
 		lblContactNo.setBounds(10, 119, 89, 14);
-		frame.getContentPane().add(lblContactNo);
+		internalFrame.getContentPane().add(lblContactNo);
 
 		contactNo = new JTextField();
 		contactNo.setBounds(126, 116, 107, 20);
-		frame.getContentPane().add(contactNo);
+		internalFrame.getContentPane().add(contactNo);
 		contactNo.setColumns(10);
 
 		JLabel lblOccupation = new JLabel("occupation :");
 		lblOccupation.setBounds(244, 119, 74, 14);
-		frame.getContentPane().add(lblOccupation);
+		internalFrame.getContentPane().add(lblOccupation);
 
 		occupation = new JTextField();
 		occupation.setBounds(346, 116, 126, 20);
-		frame.getContentPane().add(occupation);
+		internalFrame.getContentPane().add(occupation);
 		occupation.setColumns(10);
 
 		JLabel lblGuardian = new JLabel("Guardian      :");
 		lblGuardian.setBounds(11, 155, 88, 14);
-		frame.getContentPane().add(lblGuardian);
+		internalFrame.getContentPane().add(lblGuardian);
 
 		guardian = new JTextField();
 		guardian.setBounds(126, 152, 107, 20);
-		frame.getContentPane().add(guardian);
+		internalFrame.getContentPane().add(guardian);
 		guardian.setColumns(10);
 
 		JLabel lblAge = new JLabel("Age            :");
 		lblAge.setBounds(243, 155, 74, 14);
-		frame.getContentPane().add(lblAge);
+		internalFrame.getContentPane().add(lblAge);
 
 		final JLabel error = new JLabel("Please fill all the fields.");
 		error.setForeground(Color.RED);
 		error.setVisible(false);
 		error.setBounds(211, 238, 181, 14);
-		frame.getContentPane().add(error);
+		internalFrame.getContentPane().add(error);
 
 		age = new JTextField();
 		age.setBounds(346, 152, 126, 20);
-		frame.getContentPane().add(age);
+		internalFrame.getContentPane().add(age);
 		age.setColumns(10);
 
 		final JCheckBox isEmergency = new JCheckBox("Is Emergency?");
 		isEmergency.setBounds(2, 219, 145, 23);
-		frame.getContentPane().add(isEmergency);
+		internalFrame.getContentPane().add(isEmergency);
 
 		JLabel lblEmergencyCont = new JLabel("Eme. Cont.  :");
 		lblEmergencyCont.setBounds(10, 185, 89, 14);
-		frame.getContentPane().add(lblEmergencyCont);
+		internalFrame.getContentPane().add(lblEmergencyCont);
 
 		emeContact = new JTextField();
 		emeContact.setBounds(126, 182, 107, 20);
-		frame.getContentPane().add(emeContact);
+		internalFrame.getContentPane().add(emeContact);
 		emeContact.setColumns(10);
 
 		JButton btnSubmit = new JButton("REGISTER");
@@ -208,7 +219,7 @@ public class registrationForm {
 
 				if (!isError) {
 					try {
-						boolean savePatient = savePatient(patientInfo);
+						boolean savePatient = new registrationForm().savePatient(patientInfo);
 						if (savePatient == true) {
 							error.setVisible(true);
 							error.setForeground(Color.BLUE);
@@ -232,39 +243,69 @@ public class registrationForm {
 			}
 		});
 		btnSubmit.setBounds(210, 263, 107, 23);
-		frame.getContentPane().add(btnSubmit);
+		internalFrame.getContentPane().add(btnSubmit);
+
+		internalFrame.setVisible(true);
+		/*
+		 * searchField = new JTextField(); searchField.setBounds(402, 11, 150,
+		 * 20); internalFrame.getContentPane().add(searchField);
+		 * searchField.setColumns(10);
+		 * 
+		 * JButton btnNewButton = new JButton("Search");
+		 * btnNewButton.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent arg0) { } }); btnNewButton.setBounds(293,
+		 * 10, 89, 23); internalFrame.getContentPane().add(btnNewButton);
+		 */
+		final JScrollPane scrollPane = new JScrollPane();
+		JButton list = new JButton("Patient List");
+		list.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<patient> patientList = null;
+				try {
+					patientList = new patientList().getPatient(null);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				Object[][] rowData = new Object[patientList.size()][2];
+				for (int i = 0; i < patientList.size(); i++) {
+					rowData[i] = new Object[] { patientList.get(i).patient_Id, patientList.get(i).firstName,
+							patientList.get(i).lastName, patientList.get(i).address, patientList.get(i).contactNo,
+							patientList.get(i).age, patientList.get(i).isEmergency };
+				}
+				// patientList.toArray();
+				Object columnNames[] = { "Patient ID", "First Name", "Last Name", "address", "Contact No.", "Age",
+						"Emergency" };
+
+				frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+				table = new JTable(rowData, columnNames);
+
+				search = new JTextField();
+				search.setBounds(505, 0, 89, 20);
+				scrollPane.add(search);
+				search.setColumns(10);
+
+				JButton btnSearch = new JButton("Search");
+				btnSearch.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					}
+				});
+				btnSearch.setBounds(592, -1, 89, 23);
+				scrollPane.add(btnSearch);
+				scrollPane.setViewportView(table);
+				scrollPane.setVisible(true);
+				internalFrame.dispose();
+			}
+		});
+		JButton register = new JButton("Register");
+		toolBar.add(register);
+		toolBar.add(list);
+		register.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				scrollPane.setVisible(false);
+				internalFrame.setVisible(true);
+			}
+		});
 
 	}
-	
-	public boolean savePatient(Map<String, String> patientInfo) throws SQLException {
-		Connection dbCon = new databaseConnection().getConnection();
-		String buildingRoughQuery = "Insert into patient(";
-		for (int i = 0; i < patientInfo.size(); i++) {
-			buildingRoughQuery = buildingRoughQuery + (patientInfo.keySet().toArray())[i];
-			if (patientInfo.size() - 1 != i) {
-				buildingRoughQuery = buildingRoughQuery + ",";
-			} else {
-				buildingRoughQuery = buildingRoughQuery + ") values(";
-			}
-		}
-
-		for (int i = 0; i < patientInfo.size(); i++) {
-			buildingRoughQuery = buildingRoughQuery + "'" + (patientInfo.values().toArray())[i];
-			if (patientInfo.size() - 1 != i) {
-				buildingRoughQuery = buildingRoughQuery + "',";
-			} else {
-				buildingRoughQuery = buildingRoughQuery + "');";
-			}
-		}
-		Statement stat = (Statement) dbCon.createStatement();
-		int result = stat.executeUpdate(buildingRoughQuery);
-		if (result > 0) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
-	
 }
