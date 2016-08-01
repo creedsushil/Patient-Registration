@@ -57,13 +57,6 @@ public class loginForm {
 		frame.getContentPane().setLayout(null);
 		
 		
-		
-		
-		
-		
-		
-		
-		
 		textField = new JTextField();
 		textField.setBounds(195, 11, 86, 20);
 		frame.getContentPane().add(textField);
