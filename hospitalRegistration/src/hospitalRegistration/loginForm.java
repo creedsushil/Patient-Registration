@@ -69,6 +69,12 @@ public class loginForm {
 		passwordField.setBounds(195, 42, 87, 20);
 		frame.getContentPane().add(passwordField);
 
+		
+		
+		
+		
+		
+		
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setBounds(93, 45, 67, 14);
 		frame.getContentPane().add(lblPassword);
