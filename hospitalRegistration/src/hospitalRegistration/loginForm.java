@@ -118,6 +118,8 @@ public class loginForm {
 				}
 			}
 		});
+		
+		
 		btnLogIn.setBounds(150, 103, 89, 23);
 		frame.getContentPane().add(btnLogIn);
 	}
