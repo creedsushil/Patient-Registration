@@ -12,6 +12,22 @@ import com.mysql.fabric.xmlrpc.base.Array;
 import com.mysql.jdbc.Statement;
 
 public class patient {
+	public patient(int patient_Id, String firstName, String lastName, String address, String contactNo, String guardian,
+			String age, String isEmergency) {
+		super();
+		this.patient_Id = patient_Id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.contactNo = contactNo;
+		this.guardian = guardian;
+		this.age = age;
+		this.isEmergency = isEmergency;
+	}
+
+
+
+
 	public int patient_Id = 0;
     public String firstName = "";
     public String lastName = "";

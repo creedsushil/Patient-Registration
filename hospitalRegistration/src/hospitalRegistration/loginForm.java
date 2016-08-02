@@ -93,7 +93,7 @@ public class loginForm {
 						// while(result.next()){
 						frame.dispose();
 						try {
-							registrationForm windowReg = new registrationForm();
+							mainWindow windowReg = new mainWindow();
 							windowReg.frame.setVisible(true);
 						} catch (Exception e) {
 							e.printStackTrace();

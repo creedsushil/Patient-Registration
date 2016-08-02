@@ -35,7 +35,7 @@ import javax.swing.JTable;
 
 public class mainWindow {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField fName;
 	private JTextField lName;
 	private JTextField date;
@@ -280,7 +280,7 @@ public class mainWindow {
 				frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 				table = new JTable(rowData, columnNames);
 
-				search = new JTextField();
+				/*search = new JTextField();
 				search.setBounds(505, 0, 89, 20);
 				scrollPane.add(search);
 				search.setColumns(10);
@@ -291,7 +291,7 @@ public class mainWindow {
 					}
 				});
 				btnSearch.setBounds(592, -1, 89, 23);
-				scrollPane.add(btnSearch);
+				scrollPane.add(btnSearch);*/
 				scrollPane.setViewportView(table);
 				scrollPane.setVisible(true);
 				internalFrame.dispose();
